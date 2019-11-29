@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Google.Apis.Indexing.v3</name>
+    </assembly>
+    <members>
+        <member name="T:Google.Apis.Indexing.v3.IndexingService">
+            <summary>The Indexing Service.</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingService.Version">
+            <summary>The API version.</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingService.DiscoveryVersionUsed">
+            <summary>The discovery version used to generate this service.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.IndexingService.#ctor">
+            <summary>Constructs a new service.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.IndexingService.#ctor(Google.Apis.Services.BaseClientService.Initializer)">
+            <summary>Constructs a new service.</summary>
+            <param name="initializer">The service initializer.</param>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingService.Features">
+            <summary>Gets the service supported features.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingService.Name">
+            <summary>Gets the service name.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingService.BaseUri">
+            <summary>Gets the service base URI.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingService.BasePath">
+            <summary>Gets the service base path.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingService.BatchUri">
+            <summary>Gets the batch base URI; <c>null</c> if unspecified.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingService.BatchPath">
+            <summary>Gets the batch base path; <c>null</c> if unspecified.</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.IndexingService.Scope">
+            <summary>Available OAuth 2.0 scopes for use with the Indexing API.</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingService.Scope.Indexing">
+            <summary>Submit data to Google for indexing</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.IndexingService.ScopeConstants">
+            <summary>Available OAuth 2.0 scope constants for use with the Indexing API.</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingService.ScopeConstants.Indexing">
+            <summary>Submit data to Google for indexing</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingService.UrlNotifications">
+            <summary>Gets the UrlNotifications resource.</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1">
+            <summary>A base abstract class for Indexing requests.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.#ctor(Google.Apis.Services.IClientService)">
+            <summary>Constructs a new IndexingBaseServiceRequest instance.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.Xgafv">
+            <summary>V1 error format.</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.XgafvEnum">
+            <summary>V1 error format.</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.XgafvEnum.Value1">
+            <summary>v1 error format</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.XgafvEnum.Value2">
+            <summary>v2 error format</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.AccessToken">
+            <summary>OAuth access token.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.Alt">
+            <summary>Data format for response.</summary>
+            [default: json]
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.AltEnum">
+            <summary>Data format for response.</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.AltEnum.Json">
+            <summary>Responses with Content-Type of application/json</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.AltEnum.Media">
+            <summary>Media download with context-dependent Content-Type</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.AltEnum.Proto">
+            <summary>Responses with Content-Type of application/x-protobuf</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.Callback">
+            <summary>JSONP</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.Fields">
+            <summary>Selector specifying which fields to include in a partial response.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.Key">
+            <summary>API key. Your API key identifies your project and provides you with API access, quota, and reports.
+            Required unless you provide an OAuth 2.0 token.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.OauthToken">
+            <summary>OAuth 2.0 token for the current user.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.PrettyPrint">
+            <summary>Returns response with indentations and line breaks.</summary>
+            [default: true]
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.QuotaUser">
+            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
+            assigned to a user, but should not exceed 40 characters.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.UploadType">
+            <summary>Legacy upload protocol for media (e.g. "media", "multipart").</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.UploadProtocol">
+            <summary>Upload protocol for media (e.g. "raw", "multipart").</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.IndexingBaseServiceRequest`1.InitParameters">
+            <summary>Initializes Indexing parameter list.</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.UrlNotificationsResource">
+            <summary>The "urlNotifications" collection of methods.</summary>
+        </member>
+        <member name="F:Google.Apis.Indexing.v3.UrlNotificationsResource.service">
+            <summary>The service which this resource belongs to.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.UrlNotificationsResource.#ctor(Google.Apis.Services.IClientService)">
+            <summary>Constructs a new resource.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.UrlNotificationsResource.GetMetadata">
+            <summary>Gets metadata about a Web Document. This method can _only_ be used to query URLs that were
+            previously seen in successful Indexing API notifications. Includes the latest `UrlNotification` received via
+            this API.</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.UrlNotificationsResource.GetMetadataRequest">
+            <summary>Gets metadata about a Web Document. This method can _only_ be used to query URLs that were
+            previously seen in successful Indexing API notifications. Includes the latest `UrlNotification` received via
+            this API.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.UrlNotificationsResource.GetMetadataRequest.#ctor(Google.Apis.Services.IClientService)">
+            <summary>Constructs a new GetMetadata request.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.UrlNotificationsResource.GetMetadataRequest.Url">
+            <summary>URL that is being queried.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.UrlNotificationsResource.GetMetadataRequest.MethodName">
+            <summary>Gets the method name.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.UrlNotificationsResource.GetMetadataRequest.HttpMethod">
+            <summary>Gets the HTTP method.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.UrlNotificationsResource.GetMetadataRequest.RestPath">
+            <summary>Gets the REST path.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.UrlNotificationsResource.GetMetadataRequest.InitParameters">
+            <summary>Initializes GetMetadata parameter list.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.UrlNotificationsResource.Publish(Google.Apis.Indexing.v3.Data.UrlNotification)">
+            <summary>Notifies that a URL has been updated or deleted.</summary>
+            <param name="body">The body of the request.</param>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.UrlNotificationsResource.PublishRequest">
+            <summary>Notifies that a URL has been updated or deleted.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.UrlNotificationsResource.PublishRequest.#ctor(Google.Apis.Services.IClientService,Google.Apis.Indexing.v3.Data.UrlNotification)">
+            <summary>Constructs a new Publish request.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.UrlNotificationsResource.PublishRequest.Body">
+            <summary>Gets or sets the body of this request.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.UrlNotificationsResource.PublishRequest.GetBody">
+            <summary>Returns the body of the request.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.UrlNotificationsResource.PublishRequest.MethodName">
+            <summary>Gets the method name.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.UrlNotificationsResource.PublishRequest.HttpMethod">
+            <summary>Gets the HTTP method.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.UrlNotificationsResource.PublishRequest.RestPath">
+            <summary>Gets the REST path.</summary>
+        </member>
+        <member name="M:Google.Apis.Indexing.v3.UrlNotificationsResource.PublishRequest.InitParameters">
+            <summary>Initializes Publish parameter list.</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.Data.PublishUrlNotificationResponse">
+            <summary>Output for PublishUrlNotification</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.PublishUrlNotificationResponse.UrlNotificationMetadata">
+            <summary>Description of the notification events received for this URL.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.PublishUrlNotificationResponse.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.Data.UrlNotification">
+            <summary>`UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life
+            cycle of a Web Document.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.UrlNotification.NotifyTime">
+            <summary>Creation timestamp for this notification. Users should _not_ specify it, the field is ignored at
+            the request time.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.UrlNotification.Type">
+            <summary>The URL life cycle event that Google is being notified about.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.UrlNotification.Url">
+            <summary>The object of this notification. The URL must be owned by the publisher of this notification and,
+            in case of `URL_UPDATED` notifications, it _must_ be crawlable by Google.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.UrlNotification.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Indexing.v3.Data.UrlNotificationMetadata">
+            <summary>Summary of the most recent Indexing API notifications successfully received, for a given URL.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.UrlNotificationMetadata.LatestRemove">
+            <summary>Latest notification received with type `URL_REMOVED`.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.UrlNotificationMetadata.LatestUpdate">
+            <summary>Latest notification received with type `URL_UPDATED`.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.UrlNotificationMetadata.Url">
+            <summary>URL to which this metadata refers.</summary>
+        </member>
+        <member name="P:Google.Apis.Indexing.v3.Data.UrlNotificationMetadata.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+    </members>
+</doc>

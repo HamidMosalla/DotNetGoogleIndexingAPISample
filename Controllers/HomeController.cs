@@ -1,52 +1,43 @@
-﻿using System;
+﻿using GoogleIndexingAPI.Services;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using GoogleIndexingAPI.Models;
-using GoogleIndexingAPI.Services;
+using System.Web;
+using System.Web.Mvc;
 
-namespace GoogleIndexingAPI.Controllers
+namespace GoogleIndexingAPIMVC.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index()
         {
             var googleService = new GoogleIndexingApiService();
 
-            var accessToken = await googleService.GetAccessTokenWithJsonPrivateKey();
-
+            // var accessToken = await googleService.GetAccessTokenWithJsonPrivateKey();
             // var accessToken2 = await googleService.GetAccessTokenWithP12PrivateKey();
+            // var notificationStatus = await googleService.GetNotificationStatus();
 
-            var notificationStatus = googleService.GetNotificationStatus();
+            // var updateResult = await googleService.AddOrUpdateJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            // var status = await googleService.GetIndexingStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
 
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+            var batchResult = await googleService.PostBatchJobsToGoogle(null, null);
 
             return View();
         }
 
-        public IActionResult Contact()
+        public ActionResult About()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public IActionResult Privacy()
+        public ActionResult Contact()
         {
-            return View();
-        }
+            ViewBag.Message = "Your contact page.";
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }

@@ -1,30 +1,27 @@
-﻿using System;
+﻿using Google.Apis.Auth.OAuth2;
+using RestSharp;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Requests;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using RestSharp;
+using System.Web;
 
-namespace GoogleIndexingAPI.Services
+namespace GoogleIndexingAPIMVC.Services
 {
-    public class GoogleIndexingApiService
+    public class AccessTokenService
     {
         public async Task<string> GetAccessTokenWithJsonPrivateKey()
         {
-            var privateKeyStream = File.OpenRead(@"C:\Users\hmosallanejad\Desktop\New folder\hamidmosalla-83e0e56ac909.json");
+            var privateKeyStream = File.OpenRead(@"C:\Users\Hamid\Desktop\hamidmosalla-258eabd6f142.json");
 
             var serviceAccountCredential = ServiceAccountCredential.FromServiceAccountData(privateKeyStream);
 
             var googleCredetial = GoogleCredential.FromServiceAccountCredential(serviceAccountCredential);
 
             var result = await googleCredetial.UnderlyingCredential.GetAccessTokenForRequestAsync("https://www.googleapis.com/auth/indexing");
-
-            var request = new BatchRequest(new GoogleIndexingService());
 
             return result;
         }
@@ -45,14 +42,6 @@ namespace GoogleIndexingAPI.Services
             var result = await googleCredetial.UnderlyingCredential.GetAccessTokenForRequestAsync("https://www.googleapis.com/auth/indexing");
 
             return result;
-        }
-
-        public async Task<HttpStatusCode> SendIndexUpdateRequest(string url)
-        {
-            // 
-
-
-            return await Task.FromResult(HttpStatusCode.OK);
         }
 
         public async Task<HttpStatusCode> GetNotificationStatus()
