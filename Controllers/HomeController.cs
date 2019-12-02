@@ -1,10 +1,11 @@
-﻿using GoogleIndexingAPI.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Google.Apis.Indexing.v3.Data;
+using GoogleIndexingAPIMVC.Services;
 
 namespace GoogleIndexingAPIMVC.Controllers
 {
@@ -14,14 +15,18 @@ namespace GoogleIndexingAPIMVC.Controllers
         {
             var googleService = new GoogleIndexingApiService();
 
-            // var accessToken = await googleService.GetAccessTokenWithJsonPrivateKey();
-            // var accessToken2 = await googleService.GetAccessTokenWithP12PrivateKey();
-            // var notificationStatus = await googleService.GetNotificationStatus();
+            var updateResult = await googleService.AddOrUpdateJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            // var deleteResult = await googleService.CloseJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            var status = await googleService.GetIndexingStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
 
-            // var updateResult = await googleService.AddOrUpdateJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
-            // var status = await googleService.GetIndexingStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            var urls = new[]
+            {
+                "http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/",
+                // "http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/"
+            };
 
-            var batchResult = await googleService.PostBatchJobsToGoogle(null, null);
+            await googleService.AddOrUpdateBatchJobs(urls);
+            //await googleService.CloseBatchJobs(urls);
 
             return View();
         }

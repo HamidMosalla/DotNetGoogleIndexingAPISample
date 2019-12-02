@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Http;
+using Google.Apis.Indexing.v3;
+using Google.Apis.Indexing.v3.Data;
 using Google.Apis.Requests;
 using Google.Apis.Services;
-using GoogleIndexingAPIMVC.Services;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using RestSharp;
 
-namespace GoogleIndexingAPI.Services
+namespace GoogleIndexingAPIMVC.Services
 {
     public class GoogleIndexingApiService
     {
@@ -34,22 +30,24 @@ namespace GoogleIndexingAPI.Services
         //    _googleCredential = GetGoogleCredential();
         //}
 
+        #region Sigular Request
+
         public async Task<HttpResponseMessage> AddOrUpdateJob(string jobUrl)
         {
-            return await PostJobToGoogle(jobUrl, "URL_UPDATED");
+            return await AddUpdateJobGoogleIndexing(jobUrl, "URL_UPDATED");
         }
 
         public async Task<HttpResponseMessage> CloseJob(string jobUrl)
         {
-            return await PostJobToGoogle(jobUrl, "URL_DELETED");
+            return await AddUpdateJobGoogleIndexing(jobUrl, "URL_DELETED");
         }
 
         public async Task<HttpResponseMessage> GetIndexingStatus(string jobUrl)
         {
-            return await GetJobStatusFromGoogle(jobUrl);
+            return await GetJobIndexStatusFromGoogle(jobUrl);
         }
 
-        private async Task<HttpResponseMessage> PostJobToGoogle(string jobUrl, string action)
+        private async Task<HttpResponseMessage> AddUpdateJobGoogleIndexing(string jobUrl, string action)
         {
             var serviceAccountCredential = (ServiceAccountCredential)GetGoogleCredential().UnderlyingCredential;
 
@@ -78,7 +76,7 @@ namespace GoogleIndexingAPI.Services
             return response;
         }
 
-        private async Task<HttpResponseMessage> GetJobStatusFromGoogle(string jobUrl)
+        private async Task<HttpResponseMessage> GetJobIndexStatusFromGoogle(string jobUrl)
         {
             var serviceAccountCredential = (ServiceAccountCredential)GetGoogleCredential().UnderlyingCredential;
 
@@ -99,41 +97,84 @@ namespace GoogleIndexingAPI.Services
             return response;
         }
 
-        public async Task<HttpResponseMessage> PostBatchJobsToGoogle(IEnumerable<string> jobUrls, string action)
+        #endregion
+
+        #region Group Request
+
+        public async Task AddOrUpdateBatchJobs(IEnumerable<string> jobUrls)
+        {
+            await AddUpdateBatchJobGoogleIndexing(jobUrls, "URL_UPDATED");
+        }
+
+        public async Task CloseBatchJobs(IEnumerable<string> jobUrls)
+        {
+            await AddUpdateBatchJobGoogleIndexing(jobUrls, "URL_DELETED");
+        }
+
+        public async Task GetBatchJobsStatus(IEnumerable<string> jobUrls)
+        {
+            await GetBatchJobsIndexingStatusFromGoogle(jobUrls);
+        }
+
+        public async Task AddUpdateBatchJobGoogleIndexing(IEnumerable<string> jobUrls, string action)
         {
             var serviceAccountCredential = (ServiceAccountCredential)GetGoogleCredential().UnderlyingCredential;
 
-            string googleApiUrl = "https://indexing.googleapis.com/batch";
-
-            var googleIndexingApiClientService = new GoogleIndexingApiClientService(new BaseClientService.Initializer
+            var googleIndexingApiClientService = new IndexingService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = serviceAccountCredential
             });
 
-            var request = new BatchRequest(googleIndexingApiClientService, googleApiUrl);
+            var request = new BatchRequest(googleIndexingApiClientService);
 
-            //foreach (var item in jobUrls) { }
-
-            request.Queue<string>(
-                new IndexingApiBaseServiceRequest<string>(googleIndexingApiClientService,
-                new
+            foreach (var url in jobUrls)
+            {
+                var urlNotification = new UrlNotification
                 {
-                    url = "http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/",
-                    type = "URL_UPDATED"
-                }), async (content, error, i, message) =>
-                 {
-                     var con = content;
+                    Url = url,
+                    Type = action
+                };
 
-                     var errormessage = await message.Content.ReadAsStringAsync();
+                request.Queue<PublishUrlNotificationResponse>(
+                    new UrlNotificationsResource.PublishRequest(googleIndexingApiClientService, urlNotification),
+                    async (content, error, i, message) =>
+                    {
+                        var con = content;
 
-                 });
-
+                        var errormessage = await message.Content.ReadAsStringAsync();
+                    });
+            }
 
             await request.ExecuteAsync();
-
-
-            return null;
         }
+
+        public async Task GetBatchJobsIndexingStatusFromGoogle(IEnumerable<string> jobUrls)
+        {
+            var serviceAccountCredential = (ServiceAccountCredential)GetGoogleCredential().UnderlyingCredential;
+
+            var googleIndexingApiClientService = new IndexingService(new BaseClientService.Initializer
+            {
+                HttpClientInitializer = serviceAccountCredential
+            });
+
+            var request = new BatchRequest(googleIndexingApiClientService);
+
+            foreach (var url in jobUrls)
+            {
+                request.Queue<PublishUrlNotificationResponse>(
+                    new GetMetadataRequest(googleIndexingApiClientService, url),
+                    async (content, error, i, message) =>
+                    {
+                        var con = content;
+
+                        var errormessage = await message.Content.ReadAsStringAsync();
+                    });
+            }
+
+            await request.ExecuteAsync();
+        }
+
+        #endregion
 
         private GoogleCredential GetGoogleCredential()
         {
@@ -141,7 +182,7 @@ namespace GoogleIndexingAPI.Services
 
             GoogleCredential credential;
 
-            using (var stream = new FileStream(@"C:\Users\Hamid\Desktop\hamidmosalla-258eabd6f142.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(@"C:\Users\hmosallanejad\Downloads\hamidmosalla-28d08becf0a7.json", FileMode.Open, FileAccess.Read))
             {
                 credential = GoogleCredential.FromStream(stream).CreateScoped(new[] { "https://www.googleapis.com/auth/indexing" });
             }

@@ -51,7 +51,6 @@ namespace GoogleIndexingAPIMVC.Services
             var accessToken = GetAccessTokenWithJsonPrivateKey();
             request.AddHeader("Authorization", $"Bearer {accessToken}");
             request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("key", "AIzaSyAtVs5Fje6k8reFgAqkswERrYKGuhBFsQw");
             IRestResponse response = client.Execute(request);
 
             return await Task.FromResult(response.StatusCode);
