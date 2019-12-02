@@ -25,8 +25,9 @@ namespace GoogleIndexingAPIMVC.Controllers
                  "http://hamidmosalla.com/2019/11/25/an-upcoming-series-of-blog-posts-about-xunit/"
             };
 
-            var batchUpdateResult = await googleService.AddOrUpdateBatchJobs(urls);
+            // var batchUpdateResult = await googleService.AddOrUpdateBatchJobs(urls);
             // var batchCloseResult = await googleService.CloseBatchJobs(urls);
+            var batchStatusResult = await googleService.GetBatchJobsStatus(urls);
 
             return View();
         }

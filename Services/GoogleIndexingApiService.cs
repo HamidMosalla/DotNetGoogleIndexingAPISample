@@ -89,20 +89,20 @@ namespace GoogleIndexingAPIMVC.Services
 
         public async Task<List<PublishUrlNotificationResponse>> AddOrUpdateBatchJobs(IEnumerable<string> jobUrls)
         {
-           return await AddUpdateBatchJobGoogleIndexing(jobUrls, "URL_UPDATED");
+            return await AddUpdateBatchJobGoogleIndexing(jobUrls, "URL_UPDATED");
         }
 
         public async Task<List<PublishUrlNotificationResponse>> CloseBatchJobs(IEnumerable<string> jobUrls)
         {
-           return await AddUpdateBatchJobGoogleIndexing(jobUrls, "URL_DELETED");
+            return await AddUpdateBatchJobGoogleIndexing(jobUrls, "URL_DELETED");
         }
 
-        public async Task GetBatchJobsStatus(IEnumerable<string> jobUrls)
+        public async Task<List<UrlNotificationMetadata>> GetBatchJobsStatus(IEnumerable<string> jobUrls)
         {
-            await GetBatchJobsIndexingStatusFromGoogle(jobUrls);
+           return await GetBatchJobsIndexingStatusFromGoogle(jobUrls);
         }
 
-        public Task<List<PublishUrlNotificationResponse>> AddUpdateBatchJobGoogleIndexing(IEnumerable<string> jobUrls, string action)
+        private async Task<List<PublishUrlNotificationResponse>> AddUpdateBatchJobGoogleIndexing(IEnumerable<string> jobUrls, string action)
         {
             var serviceAccountCredential = (ServiceAccountCredential)GetGoogleCredential().UnderlyingCredential;
 
@@ -130,12 +130,12 @@ namespace GoogleIndexingAPIMVC.Services
                     });
             }
 
-            request.ExecuteAsync();
+            await request.ExecuteAsync();
 
-            return Task.FromResult(notificationResponses);
+            return await Task.FromResult(notificationResponses);
         }
 
-        public async Task GetBatchJobsIndexingStatusFromGoogle(IEnumerable<string> jobUrls)
+        private async Task<List<UrlNotificationMetadata>> GetBatchJobsIndexingStatusFromGoogle(IEnumerable<string> jobUrls)
         {
             var serviceAccountCredential = (ServiceAccountCredential)GetGoogleCredential().UnderlyingCredential;
 
@@ -146,19 +146,20 @@ namespace GoogleIndexingAPIMVC.Services
 
             var request = new BatchRequest(googleIndexingApiClientService);
 
+            var metaDataResponses = new List<UrlNotificationMetadata>();
+
             foreach (var url in jobUrls)
             {
-                request.Queue<PublishUrlNotificationResponse>(
-                    new GetMetadataRequest(googleIndexingApiClientService, url),
-                    async (content, error, i, message) =>
+                request.Queue<UrlNotificationMetadata>(
+                    new GetMetadataRequest(googleIndexingApiClientService, url), (response, error, i, message) =>
                     {
-                        var con = content;
-
-                        var errormessage = await message.Content.ReadAsStringAsync();
+                        metaDataResponses.Add(response);
                     });
             }
 
             await request.ExecuteAsync();
+
+            return await Task.FromResult(metaDataResponses);
         }
 
         #endregion
