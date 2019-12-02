@@ -146,10 +146,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AccessTokenService.cs" />
+    <Compile Include="Services\GoogleBatchIndexingService.cs" />
+    <Compile Include="Services\GoogleCredentialService.cs" />
     <Compile Include="Services\GetMetadataRequest.cs" />
     <Compile Include="Services\OldGoogleIndexingApiService.cs" />
-    <Compile Include="Services\GoogleIndexingApiService.cs" />
+    <Compile Include="Services\GoogleSingleIndexingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -160,6 +161,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="PrivateKey\hamidmosalla-28d08becf0a7.json" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -191,7 +193,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="PrivateKey\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

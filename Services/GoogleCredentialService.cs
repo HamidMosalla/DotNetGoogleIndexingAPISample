@@ -8,10 +8,11 @@ using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 
 namespace GoogleIndexingAPIMVC.Services
 {
-    public class AccessTokenService
+    public class GoogleCredentialService
     {
         public async Task<string> GetAccessTokenWithJsonPrivateKey()
         {
@@ -54,6 +55,20 @@ namespace GoogleIndexingAPIMVC.Services
             IRestResponse response = client.Execute(request);
 
             return await Task.FromResult(response.StatusCode);
+        }
+
+        public GoogleCredential GetGoogleCredential()
+        {
+            var path = HostingEnvironment.MapPath("/PrivateKey/hamidmosalla-28d08becf0a7.json");
+
+            GoogleCredential credential;
+
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                credential = GoogleCredential.FromStream(stream).CreateScoped(new[] { "https://www.googleapis.com/auth/indexing" });
+            }
+
+            return credential;
         }
     }
 }

@@ -13,11 +13,12 @@ namespace GoogleIndexingAPIMVC.Controllers
     {
         public async Task<ActionResult> Index()
         {
-            var googleService = new GoogleIndexingApiService();
+            var googleSingleIndexingService = new GoogleSingleIndexingService();
+            var googleBatchIndexingService = new GoogleBatchIndexingService();
 
-            // var updateResult = await googleService.AddOrUpdateJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
-            // var deleteResult = await googleService.CloseJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
-            // var status = await googleService.GetIndexingStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            var updateResult = await googleSingleIndexingService.AddOrUpdateJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            // var deleteResult = await googleSingleIndexingService.CloseJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            var status = await googleSingleIndexingService.GetIndexingStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
 
             var urls = new[]
             {
@@ -25,9 +26,9 @@ namespace GoogleIndexingAPIMVC.Controllers
                  "http://hamidmosalla.com/2019/11/25/an-upcoming-series-of-blog-posts-about-xunit/"
             };
 
-            // var batchUpdateResult = await googleService.AddOrUpdateBatchJobs(urls);
-            // var batchCloseResult = await googleService.CloseBatchJobs(urls);
-            var batchStatusResult = await googleService.GetBatchJobsStatus(urls);
+            var batchUpdateResult = await googleBatchIndexingService.AddOrUpdateBatchJobs(urls);
+            // var batchCloseResult = await googleBatchIndexingService.CloseBatchJobs(urls);
+            var batchStatusResult = await googleBatchIndexingService.GetBatchJobsStatus(urls);
 
             return View();
         }
