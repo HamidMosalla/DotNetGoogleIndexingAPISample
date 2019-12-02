@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Http;
 using Google.Apis.Indexing.v3;
@@ -17,18 +18,7 @@ namespace GoogleIndexingAPIMVC.Services
 {
     public class GoogleIndexingApiService
     {
-        //public GoogleServiceAccount _googleServiceAccount;
-        //private IConfigHelper _configHelper;
-        //private GoogleCredential _googleCredential;
-        //private IHostingEnvironment _hostingEnvironment;
-
-        //public Indexing(IConfigHelper configHelper, IHostingEnvironment hostingEnvironment)
-        //{
-        //    _configHelper = configHelper;
-        //    _hostingEnvironment = hostingEnvironment;
-        //    _googleServiceAccount = _configHelper.Settings.GoogleServiceAccounts.SingleOrDefault(a => a.Name == "Indexing");
-        //    _googleCredential = GetGoogleCredential();
-        //}
+        private HostingEnvironment HostingEnvironment => new HostingEnvironment();
 
         #region Sigular Requests
 
@@ -99,7 +89,7 @@ namespace GoogleIndexingAPIMVC.Services
 
         public async Task<List<UrlNotificationMetadata>> GetBatchJobsStatus(IEnumerable<string> jobUrls)
         {
-           return await GetBatchJobsIndexingStatusFromGoogle(jobUrls);
+            return await GetBatchJobsIndexingStatusFromGoogle(jobUrls);
         }
 
         private async Task<List<PublishUrlNotificationResponse>> AddUpdateBatchJobGoogleIndexing(IEnumerable<string> jobUrls, string action)
@@ -166,11 +156,11 @@ namespace GoogleIndexingAPIMVC.Services
 
         private GoogleCredential GetGoogleCredential()
         {
-            // var path = _hostingEnvironment.MapPath(_googleServiceAccount.KeyFile);
+            var path = HostingEnvironment.MapPath("/PrivateKey/hamidmosalla-28d08becf0a7.json");
 
             GoogleCredential credential;
 
-            using (var stream = new FileStream(@"C:\Users\hmosallanejad\Desktop\hamidmosalla-28d08becf0a7.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 credential = GoogleCredential.FromStream(stream).CreateScoped(new[] { "https://www.googleapis.com/auth/indexing" });
             }
