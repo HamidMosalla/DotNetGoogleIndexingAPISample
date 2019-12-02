@@ -15,18 +15,18 @@ namespace GoogleIndexingAPIMVC.Controllers
         {
             var googleService = new GoogleIndexingApiService();
 
-            var updateResult = await googleService.AddOrUpdateJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            // var updateResult = await googleService.AddOrUpdateJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
             // var deleteResult = await googleService.CloseJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
-            var status = await googleService.GetIndexingStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            // var status = await googleService.GetIndexingStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
 
             var urls = new[]
             {
                 "http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/",
-                // "http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/"
+                 "http://hamidmosalla.com/2019/11/25/an-upcoming-series-of-blog-posts-about-xunit/"
             };
 
-            await googleService.AddOrUpdateBatchJobs(urls);
-            //await googleService.CloseBatchJobs(urls);
+            var batchUpdateResult = await googleService.AddOrUpdateBatchJobs(urls);
+            // var batchCloseResult = await googleService.CloseBatchJobs(urls);
 
             return View();
         }
