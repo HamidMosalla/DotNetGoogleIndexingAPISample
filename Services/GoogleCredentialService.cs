@@ -1,17 +1,13 @@
-﻿using Google.Apis.Auth.OAuth2;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Hosting;
-
-namespace GoogleIndexingAPIMVC.Services
+﻿namespace GoogleIndexingAPIMVC.Services
 {
+    using Google.Apis.Auth.OAuth2;
+    using RestSharp;
+    using System.IO;
+    using System.Net;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Threading.Tasks;
+    using System.Web.Hosting;
+
     public class GoogleCredentialService
     {
         public async Task<string> GetAccessTokenWithJsonPrivateKey()
@@ -20,7 +16,7 @@ namespace GoogleIndexingAPIMVC.Services
 
             var serviceAccountCredential = ServiceAccountCredential.FromServiceAccountData(privateKeyStream);
 
-            var googleCredetial = GoogleCredential.FromServiceAccountCredential(serviceAccountCredential);
+            var googleCredetial = GoogleCredential.FromServiceAccountCredential(serviceAccountCredential).CreateScoped(new[] { "https://www.googleapis.com/auth/indexing" });
 
             var result = await googleCredetial.UnderlyingCredential.GetAccessTokenForRequestAsync("https://www.googleapis.com/auth/indexing");
 
@@ -38,7 +34,7 @@ namespace GoogleIndexingAPIMVC.Services
                 new ServiceAccountCredential.Initializer(serviceAccountEmail)
                     .FromCertificate(certificate));
 
-            var googleCredetial = GoogleCredential.FromServiceAccountCredential(serviceAccountCredential);
+            var googleCredetial = GoogleCredential.FromServiceAccountCredential(serviceAccountCredential).CreateScoped(new[] { "https://www.googleapis.com/auth/indexing" });
 
             var result = await googleCredetial.UnderlyingCredential.GetAccessTokenForRequestAsync("https://www.googleapis.com/auth/indexing");
 
@@ -52,6 +48,7 @@ namespace GoogleIndexingAPIMVC.Services
             var accessToken = GetAccessTokenWithJsonPrivateKey();
             request.AddHeader("Authorization", $"Bearer {accessToken}");
             request.AddHeader("Content-Type", "application/json");
+            request.AddParameter("scope", "https://www.googleapis.com/auth/indexing");
             IRestResponse response = client.Execute(request);
 
             return await Task.FromResult(response.StatusCode);

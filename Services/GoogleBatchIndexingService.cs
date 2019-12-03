@@ -19,22 +19,22 @@
             _googleCredential = _googleCredentialService.GetGoogleCredential();
         }
 
-        public async Task<List<PublishUrlNotificationResponse>> AddOrUpdateBatchJobs(IEnumerable<string> jobUrls)
+        public async Task<List<PublishUrlNotificationResponse>> BatchAddOrUpdateGoogleIndex(IEnumerable<string> jobUrls)
         {
-            return await AddUpdateBatchJobGoogleIndexing(jobUrls, "URL_UPDATED");
+            return await BatchAddUpdateIndex(jobUrls, "URL_UPDATED");
         }
 
-        public async Task<List<PublishUrlNotificationResponse>> CloseBatchJobs(IEnumerable<string> jobUrls)
+        public async Task<List<PublishUrlNotificationResponse>> BatchRemoveGoogleIndex(IEnumerable<string> jobUrls)
         {
-            return await AddUpdateBatchJobGoogleIndexing(jobUrls, "URL_DELETED");
+            return await BatchAddUpdateIndex(jobUrls, "URL_DELETED");
         }
 
-        public async Task<List<UrlNotificationMetadata>> GetBatchJobsStatus(IEnumerable<string> jobUrls)
+        public async Task<List<UrlNotificationMetadata>> BatchGetGoogleIndexStatus(IEnumerable<string> jobUrls)
         {
-            return await GetBatchJobsIndexingStatusFromGoogle(jobUrls);
+            return await BatchGetIndexStatus(jobUrls);
         }
 
-        private async Task<List<PublishUrlNotificationResponse>> AddUpdateBatchJobGoogleIndexing(IEnumerable<string> jobUrls, string action)
+        private async Task<List<PublishUrlNotificationResponse>> BatchAddUpdateIndex(IEnumerable<string> jobUrls, string action)
         {
             var credential = _googleCredential.UnderlyingCredential;
 
@@ -67,7 +67,7 @@
             return await Task.FromResult(notificationResponses);
         }
 
-        private async Task<List<UrlNotificationMetadata>> GetBatchJobsIndexingStatusFromGoogle(IEnumerable<string> jobUrls)
+        private async Task<List<UrlNotificationMetadata>> BatchGetIndexStatus(IEnumerable<string> jobUrls)
         {
             var credential = _googleCredential.UnderlyingCredential;
 

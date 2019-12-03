@@ -13,12 +13,15 @@ namespace GoogleIndexingAPIMVC.Controllers
     {
         public async Task<ActionResult> Index()
         {
+            // Note that we only suppose to use the indexing API with JobPosting or BroadcastEvent embedded in a VideoObject.
+            // More info: https://developers.google.com/search/apis/indexing-api/v3/quickstart
+
             var googleSingleIndexingService = new GoogleSingleIndexingService();
             var googleBatchIndexingService = new GoogleBatchIndexingService();
 
-            var updateResult = await googleSingleIndexingService.AddOrUpdateJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
-            // var deleteResult = await googleSingleIndexingService.CloseJob(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
-            var status = await googleSingleIndexingService.GetIndexingStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            var updateResult = await googleSingleIndexingService.AddOrUpdateGoogleIndex(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            var deleteResult = await googleSingleIndexingService.RemoveGoogleIndex(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
+            var status = await googleSingleIndexingService.GetGoogleIndexStatus(@"http://hamidmosalla.com/2016/01/26/supercharge-your-text-editing-with-viasfora/");
 
             var urls = new[]
             {
@@ -26,9 +29,9 @@ namespace GoogleIndexingAPIMVC.Controllers
                  "http://hamidmosalla.com/2019/11/25/an-upcoming-series-of-blog-posts-about-xunit/"
             };
 
-            var batchUpdateResult = await googleBatchIndexingService.AddOrUpdateBatchJobs(urls);
-            // var batchCloseResult = await googleBatchIndexingService.CloseBatchJobs(urls);
-            var batchStatusResult = await googleBatchIndexingService.GetBatchJobsStatus(urls);
+            var batchUpdateResult = await googleBatchIndexingService.BatchAddOrUpdateGoogleIndex(urls);
+            var batchCloseResult = await googleBatchIndexingService.BatchRemoveGoogleIndex(urls);
+            var batchStatusResult = await googleBatchIndexingService.BatchGetGoogleIndexStatus(urls);
 
             return View();
         }
